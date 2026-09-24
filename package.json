@@ -1,0 +1,10 @@
+{
+  "name": "klein-platform",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail --names frontend,backend --prefix-colors cyan,magenta \"npm --prefix frontend run dev\" \"npm --prefix backend run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.4"
+  }
+}
