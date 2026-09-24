@@ -5,6 +5,7 @@ import api from '../api/client'
 import Spinner from '../components/Spinner'
 import { useCart } from '../context/cartContext'
 import { formatPrice } from '../utils/format'
+import { getProductImage } from '../utils/productImages'
 
 export default function ProductDetail() {
   const { id } = useParams()
@@ -52,6 +53,7 @@ export default function ProductDetail() {
   }
 
   const outOfStock = product.stock <= 0
+  const image = getProductImage(product)
 
   function handleAdd() {
     addItem(product, qty)
@@ -67,8 +69,8 @@ export default function ProductDetail() {
 
       <div className="mt-6 grid gap-8 sm:grid-cols-2">
         <div className="flex h-72 items-center justify-center rounded-2xl border border-solid border-var(--border) bg-var(--bg)">
-          {product.image_url ? (
-            <img src={product.image_url} alt={product.name} className="h-full w-full object-cover rounded-2xl" />
+          {image ? (
+            <img src={image} alt={product.name} className="h-full w-full object-cover rounded-2xl" onError={(e) => { e.currentTarget.style.display = 'none' }} />
           ) : (
             <span className="text-6xl">{product.categoryEmoji}</span>
           )}

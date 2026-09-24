@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useCart } from '../context/cartContext'
 import { formatPrice } from '../utils/format'
+import { getProductImage } from '../utils/productImages'
 
 // Hook the accent colour onto the "Add" button so cards stay
 // visually quiet and the whole page shares one colour.
@@ -12,6 +13,7 @@ export default function ProductCard({ product }) {
   const [added, setAdded] = useState(false)
 
   const outOfStock = product.stock <= 0
+  const image = getProductImage(product)
 
   function handleAdd(e) {
     e.preventDefault()
@@ -24,8 +26,8 @@ export default function ProductCard({ product }) {
   return (
     <Link to={`/products/${product.id}`} className="card">
       <div className="card__image">
-        {product.image_url ? (
-          <img src={product.image_url} alt={product.name} />
+        {image ? (
+          <img src={image} alt={product.name} onError={(e) => { e.currentTarget.style.display = 'none' }} />
         ) : (
           <span className="emoji">{product.categoryEmoji}</span>
         )}
